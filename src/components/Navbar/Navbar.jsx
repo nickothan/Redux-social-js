@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-export const Navbar = () => {
+export default function Navbar() {
   return (
     <nav>
       <section>
