@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = [
-  { id: "0", name: "Tina Jenkins" },
+  { id: "0", name: "Tianna Jenkins" },
   { id: "1", name: "Kevin Grant" },
-  { id: "3", name: "Madison Price" }
+  { id: "2", name: "Madison Price" }
 ]
 
-const userSlice = createSlice({
+const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {}
 })
 
-export default userSlice.reducer
+export default usersSlice.reducer
