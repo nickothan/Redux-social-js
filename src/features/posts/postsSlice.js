@@ -4,12 +4,14 @@ const initialState = [
   {
     id: "1",
     title: "First Post",
-    content: "Hello!"
+    content: "Hello!",
+    date: new Date().toISOString()
   },
   {
     id: "2",
     title: "Second Post",
-    content: "More text."
+    content: "More text.",
+    date: new Date().toISOString()
   }
 ]
 
