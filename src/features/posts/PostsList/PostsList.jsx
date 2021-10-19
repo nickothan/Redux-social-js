@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 import { PostAuthor } from "../postAuthor"
 import { TimeAgo } from "../TimeAgo/TimeAgo"
-//import { ReactionButtons } from "./ReactionButtons"
+import ReactionButtons from "../ReactionButtons"
 
 export const PostsList = () => {
   const posts = useSelector((state) => state.posts)
@@ -24,7 +24,7 @@ export const PostsList = () => {
         </div>
         <p className="post-content">{post.content.substring(0, 100)}</p>
 
-        {/* <ReactionButtons post={post} /> */}
+        <ReactionButtons post={post} />
         <Link to={`/posts/${post.id}`} className="button muted-button">
           View Post
         </Link>
