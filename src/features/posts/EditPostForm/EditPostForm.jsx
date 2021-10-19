@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useHistory } from "react-router"
+import { useHistory } from "react-router-dom"
 
 import { postUpdated } from "../postsSlice"
 
@@ -12,13 +12,13 @@ export const EditPostForm = ({ match }) => {
   )
 
   const [title, setTitle] = useState(post.title)
-  const [content, setContetn] = useState(post.content)
+  const [content, setContent] = useState(post.content)
 
   const dispatch = useDispatch()
   const history = useHistory()
 
   const onTitleChanged = (e) => setTitle(e.target.value)
-  const onContentChanged = (e) => SVGTextContentElement(e.target.value)
+  const onContentChanged = (e) => setContent(e.target.value)
 
   const onSavePostClicked = () => {
     if (title && content) {
@@ -29,24 +29,21 @@ export const EditPostForm = ({ match }) => {
 
   return (
     <section>
-      <h2>Edit post</h2>
+      <h2>Edit Post</h2>
       <form>
-        <label htmlFor="postTitle"> Post Title:</label>
+        <label htmlFor="postTitle">Post Title:</label>
         <input
           type="text"
-          id="postContent"
-          name="postContent"
+          id="postTitle"
+          name="postTitle"
           placeholder="What's on your mind?"
           value={title}
           onChange={onTitleChanged}
         />
-
         <label htmlFor="postContent">Content:</label>
         <textarea
-          name="postContent"
           id="postContent"
-          cols="30"
-          rows="10"
+          name="postContent"
           value={content}
           onChange={onContentChanged}
         />
