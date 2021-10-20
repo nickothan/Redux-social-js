@@ -9,13 +9,14 @@ import ReactionButtons from "../ReactionButtons"
 import { SelectAllPosts, fetchPosts } from "../postsSlice"
 
 export const PostsList = () => {
+  const dispatch = useDispatch()
   const posts = useSelector(SelectAllPosts)
 
   const postStatus = useSelector((state) => state.posts.status)
 
   useEffect(() => {
     if (postStatus === "idle") {
-      dispatchEvent(fetchPosts())
+      dispatch(fetchPosts())
     }
   }, [postStatus, dispatch])
 
@@ -25,17 +26,19 @@ export const PostsList = () => {
     .sort((a, b) => b?.date?.localeCompare(a.date))
 
   const renderedPosts = orderedPosts.map((post) => {
+    console.log(" : posts : ", post?.title)
     return (
-      <article className="post-excerpt" key={post.id}>
-        <h3>{post.title}</h3>
+      <article className="post-excerpt" key={Math.random() * 100}>
+        <h3>{post?.title}</h3>
+
         <div>
-          <PostAuthor userId={post.user} />
-          <TimeAgo timestamp={post.date} />
+          <PostAuthor userId={post?.user} />
+          <TimeAgo timestamp={post?.date} />
         </div>
-        <p className="post-content">{post.content.substring(0, 100)}</p>
+        <p className="post-content">{post?.content.substring(0, 100)}</p>
 
         <ReactionButtons post={post} />
-        <Link to={`/posts/${post.id}`} className="button muted-button">
+        <Link to={`/posts/${post?.id}`} className="button muted-button">
           View Post
         </Link>
       </article>
