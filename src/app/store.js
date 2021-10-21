@@ -6,9 +6,13 @@ import postsReducer from "../features/posts/postsSlice"
 //*Import Users
 import usersReducer from "../features/users/userSlice"
 
+//* Import Notifications
+import notificationReducer from "../features/notifications/notificationSlice"
+
 export default configureStore({
   reducer: {
     posts: postsReducer,
-    users: usersReducer
+    users: usersReducer,
+    notification: notificationReducer
   }
 })
