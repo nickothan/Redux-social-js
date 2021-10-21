@@ -1,7 +1,7 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { addNewPost } from "./postsSlice"
+import { addNewPost } from "../postsSlice"
 
 export const AddPostForm = () => {
   const [title, setTitle] = useState("")
@@ -15,12 +15,6 @@ export const AddPostForm = () => {
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onContentChanged = (e) => setContent(e.target.value)
   const onAuthorChanged = (e) => setUserId(e.target.value)
-
-  const usersOptions = users.map((user) => (
-    <option key={user.id} value={user.id}>
-      {user.name}
-    </option>
-  ))
 
   const canSave =
     [title, content, userId].every(Boolean) && addRequestStatus === "idle"
@@ -40,6 +34,12 @@ export const AddPostForm = () => {
       }
     }
   }
+
+  const usersOptions = users.map((user) => (
+    <option key={user.id} value={user.id}>
+      {user.name}
+    </option>
+  ))
 
   return (
     <section>
