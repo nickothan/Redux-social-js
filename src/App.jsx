@@ -18,6 +18,9 @@ import SinglePostPage from "./features/posts/SinglePostPage"
 import UserList from "./features/users/UsersList"
 import UserPage from "./features/users/UserPage"
 
+//* Import from Notifications
+import NotificationsList from "./features/notifications/NotificationsList"
+
 function App() {
   return (
     <Router>
@@ -34,6 +37,7 @@ function App() {
               </div>
             )}
           />
+          <Route exact path="/notifications" component={NotificationsList} />
           <Route exact path="/posts/:postId" component={SinglePostPage} />
           <Route exact path="/editPost/:postId" component={EditPostForm} />
           <Route exact path="/users" component={UserList} />

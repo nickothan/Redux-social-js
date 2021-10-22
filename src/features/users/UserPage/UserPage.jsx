@@ -24,7 +24,7 @@ export const UsePage = ({ match }) => {
 
   return (
     <section>
-      <h2>{user.name}</h2>
+      <h2>{user?.name}</h2>
 
       <ul>{postTitles}</ul>
     </section>
