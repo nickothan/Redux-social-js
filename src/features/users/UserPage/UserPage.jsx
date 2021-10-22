@@ -27,4 +27,4 @@ export const UserPage = ({ match }) => {
   )
 }
 
-export default UsePage
+export default UserPage
