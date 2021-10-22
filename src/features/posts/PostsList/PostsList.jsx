@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 
 import Spinner from "../../../components/Spinner"
-import { PostAuthor } from "../PostAuthor"
+import { PostAuthor } from "../postAuthor"
 import TimeAgo from "../TimeAgo"
 import ReactionButtons from "../ReactionButtons"
 import {
