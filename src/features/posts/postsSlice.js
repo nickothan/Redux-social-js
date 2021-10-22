@@ -6,11 +6,11 @@ import {
 } from "@reduxjs/toolkit"
 import { client } from "../../api/client"
 
-const initialState = {
+/* const initialState = {
   posts: [],
   status: "idle",
   error: null
-}
+} */
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
   const response = await client.get("/fakeApi/posts")
@@ -69,9 +69,6 @@ const postsSlice = createSlice({
         state.status = "failed"
         state.error = action.error.message
       })
-      .addCase(addNewPost.fulfilled, (state, action) => {
-        state.posts.push(action.payload)
-      })
       // Use the `addOne` reducer for the fulfilled case
       .addCase(addNewPost.fulfilled, postsAdapter.addOne)
   }
@@ -81,10 +78,10 @@ export const { postAdded, postUpdated, reactionAdded } = postsSlice.actions
 
 export default postsSlice.reducer
 
-export const selectAllPosts = (state) => state.posts.posts
+/* export const selectAllPosts = (state) => state.posts.posts */
 
-export const selectPostById = (state, postId) =>
-  state.posts.posts.find((post) => post.id === postId)
+/* export const selectPostById = (state, postId) =>
+  state.posts.posts.find((post) => post.id === postId) */
 
 // Export the customized selectors for this adapter using `getSelectors`
 export const {
