@@ -6,11 +6,14 @@ import {
 } from "@reduxjs/toolkit"
 import { client } from "../../api/client"
 
-/* const initialState = {
-  posts: [],
+const postsAdapter = createEntityAdapter({
+  sortComparer: (a, b) => b.date.localeCompare(a.date)
+})
+
+const initialState = postsAdapter.getInitialState({
   status: "idle",
   error: null
-} */
+})
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
   const response = await client.get("/fakeApi/posts")
@@ -24,15 +27,6 @@ export const addNewPost = createAsyncThunk(
     return response.data
   }
 )
-
-const postsAdapter = createEntityAdapter({
-  sortComparer: (a, b) => b.date.localeCompare(a.date)
-})
-
-const initialState = postsAdapter.getInitialState({
-  status: "idle",
-  error: null
-})
 
 const postsSlice = createSlice({
   name: "posts",
@@ -62,14 +56,12 @@ const postsSlice = createSlice({
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = "succeeded"
         // Add any fetched posts to the array
-        // Use the `upsertMany` reducer as a mutating update utility
         postsAdapter.upsertMany(state, action.payload)
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed"
         state.error = action.error.message
       })
-      // Use the `addOne` reducer for the fulfilled case
       .addCase(addNewPost.fulfilled, postsAdapter.addOne)
   }
 })
@@ -78,17 +70,10 @@ export const { postAdded, postUpdated, reactionAdded } = postsSlice.actions
 
 export default postsSlice.reducer
 
-/* export const selectAllPosts = (state) => state.posts.posts */
-
-/* export const selectPostById = (state, postId) =>
-  state.posts.posts.find((post) => post.id === postId) */
-
-// Export the customized selectors for this adapter using `getSelectors`
 export const {
   selectAll: selectAllPosts,
   selectById: selectPostById,
   selectIds: selectPostIds
-  // Pass in a selector that returns the posts slice of state
 } = postsAdapter.getSelectors((state) => state.posts)
 
 export const selectPostsByUser = createSelector(

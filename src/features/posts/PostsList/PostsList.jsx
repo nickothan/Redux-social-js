@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 
 import Spinner from "../../../components/Spinner"
-import { PostAuthor } from "../postAuthor"
+import { PostAuthor } from "../PostAuthor"
 import TimeAgo from "../TimeAgo"
 import ReactionButtons from "../ReactionButtons"
 import {
@@ -16,7 +16,6 @@ import {
 let PostExcerpt = ({ postId }) => {
   const post = useSelector((state) => selectPostById(state, postId))
 
-  console.log()
   return (
     <article className="post-excerpt" key={post.id}>
       <h3>{post.title}</h3>
@@ -34,12 +33,9 @@ let PostExcerpt = ({ postId }) => {
   )
 }
 
-PostExcerpt = React.memo(PostExcerpt)
-
 export const PostsList = () => {
   const dispatch = useDispatch()
   const orderedPostIds = useSelector(selectPostIds)
-  const posts = useSelector(selectAllPosts)
 
   const postStatus = useSelector((state) => state.posts.status)
   const error = useSelector((state) => state.posts.error)
