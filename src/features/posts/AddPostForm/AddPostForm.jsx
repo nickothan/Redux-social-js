@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
+import { Spinner } from "../../components/Spinner"
 import { addNewPost } from "../postsSlice"
 import { selectAllUsers } from "../../users/userSlice"
 
@@ -10,12 +11,14 @@ export const AddPostForm = () => {
   const [userId, setUserId] = useState("")
   const [addRequestStatus, setAddRequestStatus] = useState("idle")
 
-  const dispatch = useDispatch()
+  const [addNewPost, { isLoading }] = useAddNewPostMutation()
   const users = useSelector(selectAllUsers)
 
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onContentChanged = (e) => setContent(e.target.value)
   const onAuthorChanged = (e) => setUserId(e.target.value)
+
+  const canSave = [title, content, userId].every(Boolean) && !isLoading
 
   const canSave =
     [title, content, userId].every(Boolean) && addRequestStatus === "idle"
@@ -23,8 +26,7 @@ export const AddPostForm = () => {
   const onSavePostClicked = async () => {
     if (canSave) {
       try {
-        setAddRequestStatus("pending")
-        await dispatch(addNewPost({ title, content, user: userId })).unwrap()
+        await addNewPost({ title, content, user: userId }).unwrap()
         setTitle("")
         setContent("")
         setUserId("")
