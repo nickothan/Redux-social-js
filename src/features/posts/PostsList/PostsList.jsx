@@ -1,21 +1,13 @@
-import React, { useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 
 import Spinner from "../../../components/Spinner"
 import { PostAuthor } from "../postAuthor"
 import TimeAgo from "../TimeAgo"
 import ReactionButtons from "../ReactionButtons"
-import {
-  selectAllPosts,
-  fetchPosts,
-  selectPostIds,
-  selectPostById
-} from "../postsSlice"
 
-let PostExcerpt = ({ postId }) => {
-  const post = useSelector((state) => selectPostById(state, postId))
+import { useGetPostQuery } from "../../api/apiSlice"
 
+let PostExcerpt = ({ post }) => {
   return (
     <article className="post-excerpt" key={post.id}>
       <h3>{post.title}</h3>
@@ -34,27 +26,23 @@ let PostExcerpt = ({ postId }) => {
 }
 
 export const PostsList = () => {
-  const dispatch = useDispatch()
-  const orderedPostIds = useSelector(selectPostIds)
-
-  const postStatus = useSelector((state) => state.posts.status)
-  const error = useSelector((state) => state.posts.error)
-
-  useEffect(() => {
-    if (postStatus === "idle") {
-      dispatch(fetchPosts())
-    }
-  }, [postStatus, dispatch])
+  const {
+    data: posts,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetPostQuery()
 
   let content
 
-  if (postStatus === "loading") {
+  if (isLoading) {
     content = <Spinner text="Loading..." />
-  } else if (postStatus === "succeeded") {
+  } else if (isSuccess) {
     content = orderedPostIds.map((postId) => (
       <PostExcerpt key={postId} postId={postId} />
     ))
-  } else if (postStatus === "failed") {
+  } else if (isError) {
     content = <div>{error}</div>
   }
 
