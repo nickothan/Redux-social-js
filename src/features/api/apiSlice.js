@@ -8,8 +8,11 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: () => "/posts"
+    }),
+    getPost: builder.query({
+      query: (postId) => `/posts/${postId}`
     })
   })
 })
 
-export const { useGetPostsQuer } = apiSlice
+export const { useGetPostsQuery, useGetPostQuery } = apiSlice
