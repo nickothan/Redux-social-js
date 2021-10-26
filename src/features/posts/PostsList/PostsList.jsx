@@ -27,19 +27,27 @@ let PostExcerpt = ({ post }) => {
 
 export const PostsList = () => {
   const {
-    data: posts,
+    data: posts = [],
     isLoading,
     isSuccess,
     isError,
     error
   } = useGetPostQuery()
 
+  const sortedPosts = useMemo(() => {
+    const sortedPosts = posts.slice()
+
+    sortedPosts.sort((a, b) => b.date.localeCompare(a.date))
+
+    return sortedPosts
+  }, [posts])
+
   let content
 
   if (isLoading) {
     content = <Spinner text="Loading..." />
   } else if (isSuccess) {
-    content = orderedPostIds.map((postId) => (
+    content = sortedPosts.map((postId) => (
       <PostExcerpt key={postId} postId={postId} />
     ))
   } else if (isError) {
