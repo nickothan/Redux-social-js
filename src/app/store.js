@@ -9,10 +9,13 @@ import usersReducer from "../features/users/userSlice"
 //* Import Notifications
 import notificationReducer from "../features/notifications/notificationSlice"
 
+import { apiSlice } from "../features/api/apiSlice"
+
 export default configureStore({
   reducer: {
     posts: postsReducer,
     users: usersReducer,
-    notifications: notificationReducer
+    notifications: notificationReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer
   }
 })
