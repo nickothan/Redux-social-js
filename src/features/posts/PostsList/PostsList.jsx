@@ -1,13 +1,13 @@
+import React, { useMemo } from "react"
 import { Link } from "react-router-dom"
+import classnames from "classnames"
 
 import Spinner from "../../../components/Spinner"
-import { PostAuthor } from "../postAuthor"
+import { PostAuthor } from "../PostAuthor"
 import TimeAgo from "../TimeAgo"
 import ReactionButtons from "../ReactionButtons"
 
-import { useGetPostQuery } from "../../api/apiSlice"
-
-import classnames from "classnames"
+import { useGetPostsQuery } from "../../api/apiSlice"
 
 let PostExcerpt = ({ post }) => {
   return (
@@ -31,17 +31,15 @@ export const PostsList = () => {
   const {
     data: posts = [],
     isLoading,
+    isFetching,
     isSuccess,
     isError,
-    error,
-    refetch
-  } = useGetPostQuery()
+    error
+  } = useGetPostsQuery()
 
   const sortedPosts = useMemo(() => {
     const sortedPosts = posts.slice()
-
     sortedPosts.sort((a, b) => b.date.localeCompare(a.date))
-
     return sortedPosts
   }, [posts])
 
@@ -60,13 +58,12 @@ export const PostsList = () => {
 
     content = <div className={containerClassname}>{renderedPosts}</div>
   } else if (isError) {
-    content = <div>{error}</div>
+    content = <div>{error.toString()}</div>
   }
 
   return (
     <section className="posts-list">
       <h2>Posts</h2>
-      <button onClick={refetch}>Refetch Posts</button>
       {content}
     </section>
   )

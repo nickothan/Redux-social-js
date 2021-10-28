@@ -1,12 +1,12 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-import { Spinner } from "../../components/Spinner"
-import { useGetPostQuery } from "../api/apiSlice"
+import Spinner from "../../../components/Spinner"
+import { useGetPostQuery } from "../../api/apiSlice"
 
-import { PostAuthor } from "./PostAuthor"
-import { TimeAgo } from "./TimeAgo"
-import { ReactionButtons } from "./ReactionButtons"
+import { PostAuthor } from "../PostAuthor"
+import TimeAgo from "../TimeAgo"
+import ReactionButtons from "../ReactionButtons"
 
 export const SinglePostPage = ({ match }) => {
   const { postId } = match.params

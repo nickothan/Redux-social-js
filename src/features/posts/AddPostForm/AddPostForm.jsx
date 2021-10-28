@@ -1,15 +1,14 @@
-import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import React, { useState } from "react"
+import { useSelector } from "react-redux"
 
-import { Spinner } from "../../components/Spinner"
-import { addNewPost } from "../postsSlice"
+import Spinner from "../../../components/Spinner"
+import { useAddNewPostMutation } from "../../api/apiSlice"
 import { selectAllUsers } from "../../users/userSlice"
 
 export const AddPostForm = () => {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [userId, setUserId] = useState("")
-  const [addRequestStatus, setAddRequestStatus] = useState("idle")
 
   const [addNewPost, { isLoading }] = useAddNewPostMutation()
   const users = useSelector(selectAllUsers)
@@ -20,9 +19,6 @@ export const AddPostForm = () => {
 
   const canSave = [title, content, userId].every(Boolean) && !isLoading
 
-  const canSave =
-    [title, content, userId].every(Boolean) && addRequestStatus === "idle"
-
   const onSavePostClicked = async () => {
     if (canSave) {
       try {
@@ -32,8 +28,6 @@ export const AddPostForm = () => {
         setUserId("")
       } catch (err) {
         console.error("Failed to save the post: ", err)
-      } finally {
-        setAddRequestStatus("idle")
       }
     }
   }
@@ -43,6 +37,8 @@ export const AddPostForm = () => {
       {user.name}
     </option>
   ))
+
+  const spinner = isLoading ? <Spinner size="30px" /> : null
 
   return (
     <section>
@@ -69,9 +65,16 @@ export const AddPostForm = () => {
           value={content}
           onChange={onContentChanged}
         />
-        <button type="button" onClick={onSavePostClicked} disabled={!canSave}>
-          Save Post
-        </button>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center"
+          }}>
+          <button type="button" onClick={onSavePostClicked} disabled={!canSave}>
+            Save Post
+          </button>
+          {spinner}
+        </div>
       </form>
     </section>
   )
